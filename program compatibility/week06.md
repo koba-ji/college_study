@@ -78,5 +78,75 @@ gugudan.php
   - 숫자입력: <input type="text" name="num" value="<?=$_GET['num']?>"> 
   <button type="submit">계산</button>
 </form>
+
+<?php
+// GET 방식으로 넘어온 값 출력(확인)
+//echo $_GET['num'];
+$num = $_GET['num'];
+
+// 파이선 스크립트에 값(num) 전달
+$python_path = "python3";
+$python_script = "gugudan.py";
+
+// 파이썬 실행 명령어 확인
+// python3 gugudan.py 5
+$comm = $python_path . " " . $python_script . " " . $num;
+echo $comm;
+
+?>
+
 ```
 
+### 구구단 실행 py
+gugudan.py  
+```
+import sys
+
+### 구구단을 계산하는 값
+num = sys.argv[1]
+
+#print(num)
+
+### 실행
+# python3 gugudan.py 5
+
+### 구구단 출력
+for i in range(1,10):
+    print(f"{num} x {i} = {int(num) * i}")
+```
+
+### 실행 코드
+```
+<!-- HTML 영역시작 -->
+<form action="" method="get">
+  - 숫자입력: <input type="text" name="num" value="<?=$_GET['num']?>"> 
+  <button type="submit">계산</button>
+</form>
+
+<?php
+// GET 방식으로 넘어온 값 출력(확인)
+//echo $_GET['num'];
+$num = $_GET['num'];
+
+// 파이선 스크립트에 값(num) 전달
+$python_path = "python3";
+$python_script = "gugudan.py";
+
+// 파이썬 실행 명령어 확인
+// python3 gugudan.py 5
+$comm = $python_path . " " . $python_script . " " . $num;
+//echo $comm;
+
+// 명령어 실행
+exec($comm." 2>&1", $output);
+
+// 결과 출력
+echo "<pre>";
+foreach($output as $value){
+  echo iconv("EUC-KR", "UTF-8", $value) . "\n";
+}
+echo "</pre>";
+
+?>
+
+```
